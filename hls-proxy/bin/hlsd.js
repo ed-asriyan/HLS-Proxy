@@ -4,22 +4,6 @@ const argv_vals = require('./lib/process_argv')
 
 const use_tls = (argv_vals["--tls-cert"] && argv_vals["--tls-key"]) || argv_vals["--tls"]
 
-const normalize_host = (host, port) => {
-  if (!host) return null
-
-  const parts = host.split(':')
-
-  if (parts.length > 1) {
-    host = parts[0]
-
-    const public_port = parseInt( parts[1], 10 )
-    if (! isNaN(public_port))
-      port = public_port
-  }
-
-  return `${host}:${port}`
-}
-
 const server = (use_tls)
   ? require('../servers/start_https')({
       port:     argv_vals["--port"],
@@ -32,8 +16,7 @@ const server = (use_tls)
     })
 
 const middleware = require('../proxy')({
-  is_secure:                            use_tls,
-  host:                                 normalize_host(argv_vals["--host"], argv_vals["--port"]),
+  redirect_base_url:                    argv_vals["--redirect-base-url"],
   copy_req_headers:                     argv_vals["--copy-req-headers"],
   req_headers:                          argv_vals["--req-headers"],
   req_options:                          argv_vals["--req-options"],

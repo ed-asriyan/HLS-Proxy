@@ -9,7 +9,7 @@ const argv_flags = {
   "--version":                              {bool: true},
 
   "--tls":                                  {bool: true},
-  "--host":                                 {},
+  "--redirect-base-url":                    {},
   "--port":                                 {num:  "int"},
 
   "--copy-req-headers":                     {bool: true},

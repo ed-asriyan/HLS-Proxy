@@ -111,7 +111,7 @@ options:
 --help
 --version
 --tls
---host <host>
+--redirect-base-url
 --port <number>
 --copy-req-headers
 --req-headers <filepath>
@@ -154,15 +154,7 @@ options:
     * [`./hls-proxy/servers/cert`](https://github.com/warren-bank/HLS-Proxy/tree/master/hls-proxy/servers/cert)
   * when all of these option are properly specified:
     * the `https:` protocol is used by all URLs in modified HLS manifests
-* _--host_ is an IP or hostname with an optional port number that can be resolved and is reachable by clients
-  * ex: `192.168.0.100:8080`
-  * used to modify URLs in .m3u8 files
-  * when this option is specified without a port number:
-    * the value of the _--port_ option is appended
-  * when this option is specified and the port number is `443`:
-    * the `https:` protocol is used by all URLs in modified HLS manifests
-  * when this option is not specified:
-    * the value of the ["Host"](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Host) HTTP request header is used
+* _--redirect-base-url_ is a URL base on under which HLS-proxy is available. This value will be used as prefix while building HLS file content
 * _--port_ is the port number that the server listens on
   * ex: `8080`
   * when this option is not specified:
@@ -397,7 +389,10 @@ options:
   `hlsd --port "8080"`
 
 5. start HTTP proxy at specific host:port<br>
-  `hlsd --host "192.168.0.100" --port "8080"`
+  `hlsd --redirect-base-url "http://192.168.0.100:8080" --port "8080"`
+
+6. start HTTP proxy at specific host:port under reverse proxy<br>
+  `hlsd --redirect-base-url "https://example.com" --port "8081"`
 
 6. start HTTPS proxy at default host:port<br>
   `hlsd --tls`

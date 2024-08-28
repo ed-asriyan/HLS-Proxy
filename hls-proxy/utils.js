@@ -17,14 +17,14 @@ const base64_decode = function(str) {
 }
 
 const parse_req_url = function(params, req) {
-  const {is_secure, host, manifest_extension, segment_extension, hooks} = params
+  const {redirect_base_url, manifest_extension, segment_extension, hooks} = params
 
   const result = {redirected_base_url: '', url_type: '', url: '', referer_url: ''}
 
   const matches = regexs.req_url.exec( expressjs.get_proxy_req_url(req) )
 
   if (matches) {
-    result.redirected_base_url = `${ (is_secure || (host && host.endsWith(':443'))) ? 'https' : 'http' }://${host || req.headers.host}${expressjs.get_base_req_url(req) || matches[1] || ''}`
+    result.redirected_base_url = redirect_base_url ;
 
     if (matches[3]) {
       result.url_type = matches[3].toLowerCase().trim()

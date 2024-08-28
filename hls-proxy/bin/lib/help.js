@@ -6,7 +6,7 @@ options:
 --help
 --version
 --tls
---host <host>
+--redirect-base-url <url>
 --port <number>
 --copy-req-headers
 --req-headers <filepath>
